@@ -1,0 +1,26 @@
+kind: project
+metadata:
+  name: onboarding
+spec:
+  functions:
+  - url: components/get_prep_data.py
+    name: get-prep-data
+    kind: job
+    image: mlrun/ml-models
+  - url: components/train_eval_model.py
+    name: train-eval-model
+    kind: job
+    image: mlrun/ml-models
+  - url: hub://v2_model_server
+    name: deploy-model
+    kind: nuclio
+    image: mlrun/ml-models
+  workflows:
+  - name: main
+    path: pipelines/pipeline.py
+  artifacts: []
+  artifact_path: v3io:///projects/{{run.project}}/artifacts
+  source: ''
+  subpath: ''
+  origin_url: ''
+  desired_state: online
